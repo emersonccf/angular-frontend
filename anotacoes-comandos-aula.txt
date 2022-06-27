@@ -1,0 +1,11 @@
+Instalar pacotes:
+    $ npm i json-server
+
+Configuração arquivo package.json:
+    "scripts": {
+    "start": "json-server --watch db.json --port 3001"
+  },
+
+Inicia o servidos backend:
+    $ npm start
+
