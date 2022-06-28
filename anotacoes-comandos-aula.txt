@@ -9,3 +9,107 @@ Configuração arquivo package.json:
 Inicia o servidos backend:
     $ npm start
 
+Árvore de componentes:
+
+Conceitos importantes:
+  Inicialização do app: --> main.ts
+    Ele chama o: --> AppModule (componentes dentro dos módulos)
+     E ele chama o: --> AppComponent
+      -->A partir dele todos os demais componentes serão chamados, ex: 
+          --> AppHead, 
+          --> AppContent, 
+          --> AppFooter, 
+          --> etc.
+
+O que é um componente no Angula:
+  Um trecho de código que representa um componente visual da tela que será composto
+  por um: HTML (estrutura), um CSS (estilo) e um TS (comportamento)
+  Ex. de arquivos de um componente:
+    --> home.component.css
+    --> home.component.htm
+    --> home.component.ts
+  Obs.: Pode ser colocado tudo em apenas um arquivo (no TS que seria chamado de 
+  inLineTemplate), mas para efeito de criação de componentes melhor opção será 
+  colocar cada elemento da estrutura em arquivos separados
+
+  Quando se cria um componente, para que se possa utiliza-lo e gerado uma tag que irá
+  identificá-lo:
+    Ex.: <app-home></app-home>
+    Assim será encapsulado nesta tag os três elementos necessários do componente:
+    a estrutura, o estilo e o comportamento.
+  
+  Ex. da estrutura de comportamento do componente (TS):
+    import {Component, OnInit} from '@angula/core';
+
+    @Component({
+      selector: 'fenix-home',
+      templateUrls: './home.component.html'
+      styleUrls: ['./home.component.css']
+    })
+
+    export class HomeComponent implements OnInit {
+
+      constructor() {}
+
+      ngOnInit(): void {
+
+      }
+    }
+  
+  - Pode-se observar neste exemplo que pelo menos o componente deve ter o 
+  arquivo TS, nele haverá a referência para o arquivo de HTML e CSS;
+
+  Organização dos Módulos:
+    - Todos os componentes devem está dentro de um módulo;
+    - A árvore de componentes pode ser divida horizontalmente em módulos;
+    - Os módulos podem definia a visibilidade de seus componentes; 
+
+  Anatomia do Módulo:
+
+  Module:
+      Declarations: (declara todos os elementos que fazem parte do módulo)
+        --> components
+        --> diretivas
+        --> pipes
+      Exports: (informa que elementos serão exportados, ou seja visível para fora do módulo)
+        --> components
+        --> diretivas
+        --> pipes
+      Imports: (importa outros módulos que o módulo atual seja dependente ou necessite)
+        --> Module A
+        --> Module B
+        --> Module C
+      Providers: (Onde serão declarados os service, ver na pática)
+        --> Service A
+        --> Service B
+        --> Service C
+      Bootstrap: (Define o componente que será carregado naquele módulo, 
+      necessário apena para o módulo que inicia a aplicação; carrega o componente 
+      principal na SPA: main.ts --> AppModule --> AppComponent --> ... (que chama os demais componentes da árvore))
+        --> App Component
+
+  Organização utilizando módulos:
+
+  AppModule                           XModule
+    --> Bootstrap                       Declarations | Imports
+  Declarations | Imports                Exports      | Providers
+          
+  YModule                             ZModule 
+    Declarations | Imports              Declarations | Imports
+    Exports      | Providers            Exports      | Providers
+
+========
+CLI do Angula:
+  
+  Instalando a CLI do Angula de forma global no sistema:
+    $ npm i -g @angular/cli
+  
+  Criando um projeto Angula com estrutura minima, sem teste:
+    $ ng new frontendnew --minimal
+    * Sobre criação de rotas, diz que sim (y): Would you like to add Angular routing? (y/N) y
+    * Sobre estilização escolhe-se: CSS
+    - Será criada toda a estrutura necessária para trabalhar com o Angula
+
+  
+
+
