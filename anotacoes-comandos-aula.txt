@@ -8,6 +8,8 @@ Configuração arquivo package.json:
 
 Inicia o servidos backend:
     $ npm start
+Acessa o endpoint http://localhost:3001/products , 
+para ver o servidor funcionando: GET, PUT, PATCH, DELETE, ETC. no Postman ou curl
 
 Árvore de componentes:
 
@@ -98,7 +100,7 @@ O que é um componente no Angula:
     Declarations | Imports              Declarations | Imports
     Exports      | Providers            Exports      | Providers
 
-========
+======== Aula 516
 CLI do Angula:
   
   Instalando a CLI do Angula de forma global no sistema:
@@ -110,6 +112,183 @@ CLI do Angula:
     * Sobre estilização escolhe-se: CSS
     - Será criada toda a estrutura necessária para trabalhar com o Angula
 
+  Entra na pasta criada do frontendnew:
+    $ cd frontendnew
+  Inicia o servidor do frontend:
+    $ npm start
+  Acessa o navegador no endereço:  http://localhost:4200/, para ver a aplicação funcionando
   
+======== Aula 517
 
+Ajusta as configurações do arquivo angular.json, nas seguintes configurações:
+  "inlineTemplate": false,
+  "inlineStyle": false,
+Isso é necessário para que os arquivos CSS e HTML fiquem em arquivos separados.
+Pois no minimal ele opta por configurar desta forma.
+
+Dentro da pasta do projeto: /frontendnew
+    Tem uma pasta chamada:        /src
+    Onde ficam os está o:             main.ts (que chama o modulo)
+    O AppModule fica dentro da pasta: /app
+    Onde estão os arquivos:               app-module.ts (que tem o bootstrap que chama o AppComponent)
+                                          app-component.ts (que tem as definições do componente que será renderizado no browser)
+                                          app-routing.module.ts (rotas do módulo, estudar mais a frente ...)
+
+Em main.ts é onde está sendo chamado, carregado o nosso módulo principal 
+chamado de AppModule que fica na pasta ./src/app/app.module.ts . Nele é chamado
+em bootstrap o AppComponent que foi importado e declarado para ser invocado dentro
+do AppModule. E por fim ele exporta a si mesmo (AppModule) para ser inicializado por
+main.ts.
+
+Podemos observar que AppComponent está com o template no formato inline, 
+iremos modificar isso.
+
+- Na pasta /frontendnew/src/assets ficam as images e fontes utilizadas no component.
+
+- Na pasta /frontendnew/src/environments ficam as variáveis de ambiente no 
+arquivo environments.ts para desenvolvimento e environments.pord.ts o de produção.
+
+- E temos dentro de /frontendnew/src/index.html que é a SPA (Single Page Application
+ou Aplicações de Página Única) que referencia, aponta para o componente raiz através da
+tag <app-root></app-root>, pois no arquivo app-component.ts tem como selector: 'app-root',
+assim que a aplicação sabe que componente deve carregar, e os outros componentes também serão
+carregados nesta nesta única página através do componente raiz.
+
+======== Aula 518
+
+Vamos editar o arquivo app-component.ts para apontar para um arquivo de 
+template html e de css externos fazendo o seguinte:
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.css'],
+E também vamos criar estes arquivos no mesmo nível da pasta onde está app-component.ts:
+  /frontendnew/src/app/app.component.html (Damos este conteúdo ao arquivo: <h1>Component App</h1>)
+  /frontendnew/src/app/app.component.css (deixamos este com o conteúdo vazio)
+
+E possível interpolada o valor de uma variável exportada através do uso do {{ }}
+no component da em questão, ex.:
+  # app-component.ts
+  import { Component } from '@angular/core';
+  @Component({
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css']
+  })
+  export class AppComponent {
+    title = 'frontendnew'; // title <-- variável em questão
+  }
+  # E no app.component.html, faríamos
+  <h1>Component App</h1>
+  <h2>Olá o nome desta aplicação é: {{ title }}</h2> <!-- variável title 
+  interpolada através do {{ }} exibindo seu valor no browser. -->
+
+======== Aula 519
+
+Instalando os componentes do Material Design 
+
+1- com a aplicação Angula parada;
+2- Executa o seguinte comando:
+  $ ng add @angular/material
+  Quando da instalação será solicitado escolher as o esquema de cor do projeto,
+  selecione o seu preferido:
+    * Choose a prebuilt theme name, or "custom" for a custom theme: Indigo/Pink
+  Informe se o esquema de tipo de fontes será aplicado para o projeto inteiro:  
+    *  Set up global Angular Material typography styles? Yes
+  Com relação às animações:
+    * Include the Angular animations module? Include and enable animations
+  Será feita a instalação conforme as configurações selecionadas.
+
+======== Aula 520
+
+Implementado o componente header (cabeçalho)
+
+Para criar um componente, estando na pasta raiz do projeto frontend (/frontendnew/),
+utilizando o terminal, digite o comando:
+  $ ng generate component components/template/header # ou de forma resumida
+  $ ng g c components/template/header # a ultima parte é o path do component a ser gerado
+
+Serão criado três arquivos no caminho especificado: 
+  - header.component.ts;
+  - header.component.html; e
+  - header.component.css.
+  CREATE src/app/components/template/header/header.component.html (21 bytes)
+  CREATE src/app/components/template/header/header.component.ts (275 bytes)
+  CREATE src/app/components/template/header/header.component.css (0 bytes)
+  UPDATE src/app/app.module.ts (604 bytes)
+    import { HeaderComponent } from './components/template/header/header.component';
+    ...
+    declarations: [
+    AppComponent,
+    HeaderComponent
+    ],
+    ...
+E será atualizado o arquivo app.module.ts que passará a importar o componente 
+recentemente criado, conforme visto acima.
+
+Após este processo pode-se ir no app.component.html e acrescentar a tag
+<app-header></app-header> isso será suficiente para que o cabeçalho seja
+renderizado e irá aparecer no navegador o seguinte: header works! (cabeçalho
+funcionando). Agora já podemos trabalhar para estilizar o cabeçalho e deixá-lo
+como desejamos.
+
+Vamos trabalhar no template: src/app/components/template/header/header.component.html
+mas antes iremos necessitar utilizar um componente que já vem pronto no Material e
+temos que importá-lo:
+  - No AppModel (src/app/app.module.ts) fazemos o import:
+    --> import { MatToolbarModule } from '@angular/material/toolbar'
+  
+  - Adiciona MatToolbarModule na seção dos importes:
+    --> imports: [
+      ...
+      MatToolbarModule,
+      ...
+    ]
+
+  - No arquivo header.component.html, faremos a seguinte edição, antes
+  adicionamos a imagem logo.png no caminho referenciado:
+    <mat-toolbar class="header mat-elevation-z3">
+        <span>
+            <a>
+                <img class="logo" src="assets/img/logo.png" alt="logo">
+            </a>
+        </span>
+        <span class="title-group">
+            <a>
+                <i class="material-icons">
+                    home
+                    <!-- dashboard -->
+                </i>
+                Aplicação CRUD
+            </a>
+        </span>
+    </mat-toolbar>
+  
+  - Para ajustar a imagem para que fique adequada no tamanho vamos manipular o
+  arquivo css header.component.css e estilizar as classes definidas para o header:
+    
+    .header {
+    display: flex;
+    align-items: center;
+    }
+
+    .header a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .header .logo {
+        max-width: 200px;
+    }
+
+    .header .title-group{
+        padding-left: 25px;
+    }
+
+    .header .title-group i {
+        padding-right: 5px;
+    }
+
+======== Aula 521
+
+Implementado o componente rodapé (Footer)
 
