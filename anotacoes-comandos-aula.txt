@@ -31,14 +31,16 @@ O que é um componente no Angula:
     --> home.component.htm
     --> home.component.ts
   Obs.: Pode ser colocado tudo em apenas um arquivo (no TS que seria chamado de 
-  inLineTemplate), mas para efeito de criação de componentes melhor opção será 
+  inline template), mas para efeito de criação de componentes melhor opção será 
   colocar cada elemento da estrutura em arquivos separados
 
-  Quando se cria um componente, para que se possa utiliza-lo e gerado uma tag que irá
+  Quando se cria um componente, para que se possa utiliza-lo é gerada uma tag que irá
   identificá-lo:
     Ex.: <app-home></app-home>
     Assim será encapsulado nesta tag os três elementos necessários do componente:
-    a estrutura, o estilo e o comportamento.
+    a estrutura, o estilo e o comportamento. Essa tag é definida no atributo
+	| selector: 'app-home' | no arquivo home.component.htm onde é definido o
+	nome da tag.
   
   Ex. da estrutura de comportamento do componente (TS):
     import {Component, OnInit} from '@angula/core';
@@ -64,7 +66,7 @@ O que é um componente no Angula:
   Organização dos Módulos:
     - Todos os componentes devem está dentro de um módulo;
     - A árvore de componentes pode ser divida horizontalmente em módulos;
-    - Os módulos podem definia a visibilidade de seus componentes; 
+    - Os módulos podem definir a visibilidade de seus componentes; 
 
   Anatomia do Módulo:
 
@@ -81,14 +83,14 @@ O que é um componente no Angula:
         --> Module A
         --> Module B
         --> Module C
-      Providers: (Onde serão declarados os service, ver na pática)
+      Providers: (Onde serão declarados os service, ver na pática mais a frente ...)
         --> Service A
         --> Service B
         --> Service C
-      Bootstrap: (Define o componente que será carregado naquele módulo, 
+      Bootstrap: (Define o componente que será o primeiro a ser carregado naquele módulo, 
       necessário apena para o módulo que inicia a aplicação; carrega o componente 
       principal na SPA: main.ts --> AppModule --> AppComponent --> ... (que chama os demais componentes da árvore))
-        --> App Component
+        --> AppComponent
 
   Organização utilizando módulos:
 
@@ -101,6 +103,7 @@ O que é um componente no Angula:
     Exports      | Providers            Exports      | Providers
 
 ======== Aula 516
+
 CLI do Angula:
   
   Instalando a CLI do Angula de forma global no sistema:
@@ -108,14 +111,15 @@ CLI do Angula:
   
   Criando um projeto Angula com estrutura minima, sem teste:
     $ ng new frontendnew --minimal
-    * Sobre criação de rotas, diz que sim (y): Would you like to add Angular routing? (y/N) y
+    
+	* Sobre criação de rotas, diz que sim (y): Would you like to add Angular routing? (y/N) y
     * Sobre estilização escolhe-se: CSS
     - Será criada toda a estrutura necessária para trabalhar com o Angula
 
   Entra na pasta criada do frontendnew:
     $ cd frontendnew
   Inicia o servidor do frontend:
-    $ npm start
+	$ npm start
   Acessa o navegador no endereço:  http://localhost:4200/, para ver a aplicação funcionando
   
 ======== Aula 517
