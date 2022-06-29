@@ -429,4 +429,106 @@ Implantado o componente de navegação (nav)
 
 ======== Aula 523
 
+Elementos do Angular, aula teórica #01 de 03
 
+- Componentes (módulos);
+- Diretivas;
+- Bindes (comunicação entre TS e HTML): 
+  * Property (de atributos), 
+  * Event (de evento),
+  * One Way Data (), e
+  * Tow Way Data ().
+- Rotas (navegação entre os componentes);
+- Pipes (processamentos dentro da página);
+- Observables (programação reativa);
+- Services;
+- Injeção de dependência ;
+
+1. Componentes:
+  - Formados por três partes (HTML, CSS e TS), não necessariamente precisa ter o
+  estilo (css);
+  - O componente tem o seu próprio escopo, seu mundo interno. Isso quer diz que
+  , por exemplo, estilos aplicados ao componente fica restrito ao componente;
+
+2. Diretivas:
+    2.1 Diretiva de Atributo:
+      - Altera a aparência (alterar o CSS) e o comportamento (altera o TS ou JS:
+      faz chamada Ajax ao backend, por exemplo) de um elemento, componente ou 
+      outra diretiva;
+
+      - Estas diretivas são utilizadas na tag do elemento HTML da seguinte forma,
+      ex.: <tag class="name-class" nomeDiretiva></tag>;
+
+      Ex. de uma diretiva de atributo (Attribute Directives):
+        @Directive({
+            selector: '[appRed]' // <== CHAMADA / APELIDO DA DIRETIVA 
+        })
+          export class RedDirective {
+            constructor(el: ElementRef){
+              el.nativeElement.style.color = '#e35e66b';
+            }
+        }
+      => Ex. da chamada da diretiva no HTML >> alterando o estilo / aparência 
+        de um elemento:
+        
+        <i class="material-icons v-middle"> <!-- coração preto -->
+          favorite
+        </i>
+        
+        <i class="material-icons v-middle" appRed> <!-- coração vermelho com a chamada da diretiva appRed -->
+          favorite
+        </i>
+
+    2.2 Diretiva Estrutural:
+      - Altera o layout adicionando e/ou removendo elementos do DOM, altera a
+      estrutura HTML do elemento;
+
+      - Estas diretivas são utilizadas na tag do elemento HTML precedidas de um
+      asterisco, ex.: <tag class="name-class" *nomeDiretiva></tag>; 
+      
+      Ex. de uma diretiva de estrutura (Structural Directives) que já vem 
+      embutida no Angula a *ngIf e a *ngFor. São dois exemplos de vários outros
+      que existem no Angular:
+
+      <form *ngIf="product" class="product-form">
+      </form>
+      => Neste exemplo, se (*ngIf) produto for definido / setado ele será 
+      exibido. A condição a ser avaliada é declarada dentro de aspas conforme
+      visto acima;
+      
+      <ul>
+        <li *ngFor="let product of products">
+        </li>
+      </ul>
+      => Neste exemplo, Será realizada uma iteração (*ngFor) em products e para
+      cada product será exibido um elemento na lista não ordenada. A condição 
+      da iteração é declarada dentro de aspas;
+  
+  3. Binding:
+    
+    3.1 Property Binding (Binding de Atributo)
+      - Quando se quer "pegar" dados / informações que estão nos componentes TS
+      e passar para a tag HTML (componentes são pequenas aplicações onde deve 
+      existir comunicação entre o arquivo TS com o arquivo HTML) uma das formas 
+      de estabelecer esta comunicação entre TypeScript e o HTML é através de 
+      Property Binding ou Binding de atributo. Conforme exemplo abaixo:
+
+        => TS
+          @Component({
+            selector: 'app-product-read',
+            templateUrl: './product-read.component.html',
+            styleUrl: './product-read.component.css'
+          })
+          
+          export class ProductReadComponent implements OnInit {
+            products: Product[] // propriedade product criada como array de Product
+          }
+        =====> No arquivo TS acima foi criado o componente app-product-read e 
+        exposto para fora através da classe ProductReadComponent o atributo 
+        products que poderá ser utilizado no HTML do componente para popular uma
+        tabela com os respectivos elementos deste array (products).
+        
+        => HTML
+          <table [dataSource]="products">
+          </table>
+        =====> 12m59 parei
