@@ -1,3 +1,9 @@
+Exemplos de website em Angular:
+  - https://github.com/AndrewJBateman/angular-website-example (bacana)
+  - https://github.com/cosmicjs/angular-company-website
+  - https://github.com/gothinkster/angular-realworld-example-app
+  - https://github.com/kdechant/angular-django-csrf-example (com Django)
+
 Instalar pacotes:
     $ npm i json-server
 
@@ -295,4 +301,132 @@ temos que importá-lo:
 ======== Aula 521
 
 Implementado o componente rodapé (Footer)
+
+  1º passo: 
+    Para criar um componente, estando na pasta raiz do projeto frontend 
+    (/frontendnew/),utilizando o terminal, digite o comando:
+      
+      $ ng g c components/template/footer # ou de forma resumida
+  
+  2º passo:
+    Já podemos editar o arquivo app.component.html incluindo a tag no componente
+    footer que foi criado: <app-footer></app-footer>;
+  
+  3º passo:
+    "Desenhar" com HTML a estrutura do footer e aplicar o estilo necessário
+    utilizando o CSS;
+
+    * Estrutura HTML (footer.component.html):
+
+      <mat-toolbar class="footer">
+          <span>
+              Desenvolvido com
+              <i class="material-icons red v-middle">
+                  favorite
+              </i>
+              por <strong>Cod<span class="red">3</span>r</strong>
+          </span>
+      </mat-toolbar>
+
+    * Estilo CSS (footer.component.css):
+
+      .footer {
+          position: fixed;
+          bottom: 0;
+          display: flex;
+          justify-content: flex-end;
+      }
+
+      .footer > span {
+          font-size: 1.1rem;
+          font-weight: 300;
+      }
+
+
+  Exite um arquivo "geral" de estilo CSS que compartilha estilos que são padrões 
+  para toda a aplicação. Aqui pode ser definidas classes que podem ser utilizadas
+  de forma global na aplicação. Este arquivo fica em ./src/styles.css . Foram
+  definidos alguns estilos gerais, também neste aquivo para servir ao footer:
+    
+    * Estilo Geral CSS (styles.css):
+
+      .red {
+          color: rgb(277, 94, 107);
+      }
+
+      .v-middle {
+          vertical-align: middle;
+      }  
+
+======== Aula 522
+
+Implantado o componente de navegação (nav)
+
+  Vamos repetir os mesmos passos da aula anterior só alterando o path de onde os
+  arquivos irão ser gerados:
+
+  $ ng g c components/template/nav
+
+  Foram gerados os componentes e agora iremos necessitar utilizar 
+  dois componentes que já vem prontos no Material e temos que importá-los:
+  - No AppModel (src/app/app.module.ts) fazemos o import:
+    --> import { MatSideNavModule } from '@angular/material/sidenav'
+    --> import { MatListModule } from '@angular/material/list'
+  
+  - Adiciona MatSidenavModule e MatListModule na seção dos importes:
+    --> imports: [
+      ...
+      MatSidenavModule,
+      MatListModule,
+      ...
+    ]
+  - Inserimos entre header e o footer no arquivo app.component.html 
+    a tag no componente de navegação que foi criado: <app-nav></app-nav>
+  
+  Perceba que assim estamos criando a nossa arvore de componentes dentro de
+  nossa app.component.
+  
+  Fontes de ícones para consulta: https://material.io/resources
+  
+  Vamos definir agora o nosso nav (para compreender todas as configurações
+  do Material é necessário ler a documentação deste módulo para o Angular):
+
+    * Estrutura HTML (footer.component.html):
+
+      <mat-sidenav-container class="container">
+          <mat-sidenav class="sidenav" mode="side" opened fixedInViewport="true" fixedTopGap="64">
+              <mat-nav-list class="nav-list">
+                  <a mat-list-item>
+                      <i class="material-icons">
+                          home
+                      </i>
+                      Início
+                  </a>
+                  <a mat-list-item>
+                      <i class="material-icons">
+                          storefront
+                      </i>
+                      Produtos
+                  </a>
+              </mat-nav-list>
+          </mat-sidenav>
+      </mat-sidenav-container>
+
+    * Estilo CSS (footer.component.css):
+
+    .sidenav {
+    background-color: #3f51b5;
+    width: 200px;
+    }
+
+    .sidenav a {
+        color: #fff;
+    }
+
+    .sidenav i {
+        padding-right: 10px;
+    }
+
+======== Aula 523
+
 
