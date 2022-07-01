@@ -433,7 +433,7 @@ Elementos do Angular, aula teórica #01 de 03
 
 - Componentes (módulos);
 - Diretivas;
-- Bindes (comunicação entre TS e HTML): 
+- Bindes (ligação / comunicação entre TS e HTML): 
   * Property (de atributos), 
   * Event (de evento),
   * One Way Data (), e
@@ -452,7 +452,7 @@ Elementos do Angular, aula teórica #01 de 03
 
 2. Diretivas:
     2.1 Diretiva de Atributo:
-      - Altera a aparência (alterar o CSS) e o comportamento (altera o TS ou JS:
+      - Altera a aparência (alterar o CSS) e/ou comportamento (altera o TS ou JS:
       faz chamada Ajax ao backend, por exemplo) de um elemento, componente ou 
       outra diretiva;
 
@@ -531,4 +531,23 @@ Elementos do Angular, aula teórica #01 de 03
         => HTML
           <table [dataSource]="products">
           </table>
-        =====> 12m59 parei
+        =====> Para acessar esse array de produtos no HTML é preciso ter algum
+        tipo de sintaxe / sinalização para informar que ele irá acessar a variável
+        products criada no TS, dentro do componente. E a forma que se tem para
+        estabelecer esta comunicação e colocar o atributo que ser quer passar o
+        valor da variável entre colchetes []. Como foi realizado no exemplo anterior
+        com [dataSource]="products". Se dataSource não for colocado entre [] o
+        angular vai interpretar que o valor passado é um string comum igual em 
+        uma tag HTML comum. Mas quando é utilizado os colchetes para envolver a 
+        propriedade dataSource ele vai olhar para o componente procurando um
+        atributo com o nome que se encontra entre aspas "" apos o = que tenha o
+        mesmo nome, no caso products. Aí ele vai pegar o array associado a esta
+        variável passar para o HTML para montar a tabela de produtos. Então a forma
+        que se tem de fazer uma ligação (Binding) entre o HTML e o TS e envolvendo
+        as propriedades HTML em colchetes [] e passando o nome da variável TS como
+        string para este atributo, dataSource não é um atributo comum para tabela
+        porém é utilizado pelo MaterialDesign, que está sendo utilizado, para pode
+        renderizar a tabela com seus dados.
+
+    3.2 Event Binding (Binding de Evento)
+      - parei 15m
