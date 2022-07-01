@@ -16,9 +16,14 @@
       "price": "7520.89"
     },
     {
-      "name": "Lapis Preto Básico",
-      "price": "1.50",
+      "name": "Lápis Preto Cumum",
+      "price": "1.45",
       "id": 4
+    },
+    {
+      "name": "Papel A4",
+      "price": "32.50",
+      "id": 5
     }
   ]
 }
