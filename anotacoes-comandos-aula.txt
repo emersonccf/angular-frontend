@@ -431,24 +431,29 @@ Implantado o componente de navegação (nav)
 
 Elementos do Angular, aula teórica #01 de 03
 
-- Componentes (módulos);
-- Diretivas;
-- Bindes (ligação / comunicação entre TS e HTML): 
+1- Componentes (módulos);
+
+2- Diretivas (altera estilo ou estrutura do HTML);
+  * Diretiva de Atributo;
+  * Diretiva Estrutural
+  
+3- Bindes (ligação / comunicação entre TS e HTML): 
   * Property (de atributos), 
-  * Event (de evento),
-  * One Way Data (), e
-  * Tow Way Data ().
-- Rotas (navegação entre os componentes);
-- Pipes (processamentos dentro da página);
-- Observables (programação reativa);
-- Services;
-- Injeção de dependência ;
+    + One Way Data (),
+    + Two Way Data ().
+  * Event (de evento).
+
+4- Rotas (navegação entre os componentes);
+5- Pipes (processamentos dentro da página);
+6- Observables (programação reativa);
+7- Services;
+8- Injeção de dependência;
 
 1. Componentes:
   - Formados por três partes (HTML, CSS e TS), não necessariamente precisa ter o
   estilo (css);
-  - O componente tem o seu próprio escopo, seu mundo interno. Isso quer diz que
-  , por exemplo, estilos aplicados ao componente fica restrito ao componente;
+  - O componente tem o seu próprio escopo, seu mundo interno. Isso quer diz que, 
+  por exemplo, estilos aplicados ao componente fica restrito ao componente;
 
 2. Diretivas:
     2.1 Diretiva de Atributo:
@@ -548,6 +553,206 @@ Elementos do Angular, aula teórica #01 de 03
         string para este atributo, dataSource não é um atributo comum para tabela
         porém é utilizado pelo MaterialDesign, que está sendo utilizado, para pode
         renderizar a tabela com seus dados.
+      
+      3.1.1 On Way Data Binding (Apenas um sentido de ligação de dados) TS --> HTML
+        -  Quando se deseja que a comunicação entre o TS e o HTML seja de sentido
+        único do TS --> para o HTML a sintaxe utilizada é esta apresentada anteriormente,
+        ou seja, utiliza-se os colchetes [] envolvendo a propriedade HTML que irá
+        receber o valor da variável quando ela for alterada no TS. Assim as alterações
+        no valor da variável só ocorrem no sentido do TS para o HTML, como pode
+        ser visto no exemplo abaixo:
+          
+          => TS
+            @Component({
+              selector: 'app-product-read',
+              templateUrl: './product-read.component.html',
+              styleUrl: './product-read.component.css'
+            })
+            
+            export class ProductReadComponent implements OnInit {
+              nomeCliente: string // propriedade nome
+              //...
+              nomeCliente = "Paulo" // variável sofrendo alteração de valor
+            }
+          =====> O atributo nomeCliente é criado e exposto no TS. Quando seu valor
+          é alterado no script ele envia uma notificação para o HTML e altera o 
+          valor da propriedade definida lá pelo novo valor da variável.
+          
+          => HTML
+            <input [value]="nomeCliente">
+          =====> No HTML a variável nomeCliente é invocada através da propriedade
+          value que está sinalizada pela sintaxe de [] no input que irá receber 
+          sempre o valor desta variável quando ela for alterada no TS 
+          (On Way Data Binding) TS --> HTML .
+
+      3.1.2 Two Way Data Binding (Sentido duplo de ligação de dados) TS <--> HTML
+        -  Quando se deseja que a comunicação entre o TS e o HTML seja de sentido
+        duplo, ou seja, alterações no conteúdo da propriedade HTML se reflitam no
+        TS e vice-versa, a sintaxe para sinalizar este comportamento do biding é
+        outra utiliza-se a combinação dos colchetes com os parenteses [()] envolvendo
+        a propriedade que se deseja que se comporte como Two Way Data Binding,
+        como pode ser visto no exemplo abaixo:
+          
+          => TS
+            @Component({
+              selector: 'app-product-read',
+              templateUrl: './product-read.component.html',
+              styleUrl: './product-read.component.css'
+            })
+            
+            export class ProductReadComponent implements OnInit {
+              nomeCliente: string // propriedade nome
+              //...
+              nomeCliente = "Paulo" // variável sofrendo alteração de valor
+            }
+          =====> O mesmo exemplo anterior, o atributo nomeCliente é criado e 
+          exposto no TS. Quando seu valor é alterado no script ele envia uma 
+          notificação para o HTML e altera o valor da propriedade definida lá 
+          pelo novo valor da variável e quando o valor for alterado no HTML isso
+          também irá alterar o valor no TS do componente. 
+          
+          => HTML
+            <input [(ngModel)]="nomeCliente"> <!-- caso o usurário digite Renato no input isso se refletirá no TS -->
+          =====> No HTML a variável nomeCliente é invocada através da propriedade
+          value que está sinalizada pela sintaxe de colchetes e parenteses com a
+          chamada ngModel dentro  [(ngModel)] no input que irá receber sempre o 
+          valor desta variável quando ela for alterada no TS e quando o usurário 
+          alterar o valor do input isso se refletirá também 
+          no TS (Two Way Data Binding) TS <--> HTML . Esta sintaxe e bastante usada
+          para trabalhar com formulários. 
 
     3.2 Event Binding (Binding de Evento)
-      - parei 15m
+      - Quando se deseja ligar, ou seja, fazer um biding entre um evento do HTML
+      com um método criado no componente no arquivo TS. Faz-se algo semelhante ao
+      biding de atributo com uma pequena diferença: a sintaxe / sinalização para
+      isso é modificada ou seja o evento no HTML será envolvido com parenteses ()
+      para realizar o biding de evento, conforme exemplo abaixo:
+
+        => TS
+          @Component({
+            selector: 'app-product-create',
+            templateUrl: './product-create.component.html',
+            styleUrl: './product-create.component.css'
+          })
+          
+          export class ProductCreateComponent implements OnInit {
+            // ...
+            createProduct(): void { // método createProduct que será exposto 
+              //...
+            }
+            // ...
+          } 
+        =====> No arquivo TS acima foi criado o componente app-product-create e 
+        exposto para fora através da classe ProductCreateComponent onde o método
+        createProduct() poderá ser invocado via biding de evento no HTML do
+        componente.
+
+        => HTML
+          <button mat-raised-button
+            (click)="createProduct()" // evento click envolvido na sintaxe de ()
+            color="primary">
+            Salvar
+          </button>
+        =====> Para acessar o método createProduct() no HTML é preciso sintaxe /
+        sinalização de () envolvendo o nome do evento que se deseja realizar a
+        ligação / biding e logo após o igual = dentro das aspas "" informar o
+        nome do método que se deseja invocar acompanhado dos parenteses, conforme
+        no exemplo acima, reproduzido aqui: (click)="createProduct()"
+
+  4. Router (Rotas):
+    
+    - Dado um conjunto de componentes que foram criado deseja-se navegar ou alternar
+    entre eles ir e voltar, ex.:
+      
+      ==> /home    vá para --> [Componente Home] 
+      ==> /produto vá para --> [Componente Produto] 
+      ==> /usuario vá para --> [Componente Usuário]
+
+    - Então como fazer isso? Faz-se o mapeamento entre uma URL e o componente que
+    se deseja exibir, conforme exemplificado acima através do sistema de rotas do
+    Angular.
+
+    - Como isso funciona, ex.:
+      * Na estrutura da página index.html exite a seguinte estrutura:
+        
+        + Um componente NAV com as seguintes opções [ HOME | PRODUTO | USUÁRIO ]
+        
+        + Uma área chamada de [Route Outlet] (ou seja, exibe a saída/componente 
+          da rota que foi selecionada). Por exemplo se a rota selecionada for 
+          /home clicando no NAV no link HOME, na área de saída da rota será exibido
+          o [Componente Home] e assim sucessivamente para os demais links no NAV
+          alteração o conteúdo exibido nesta região.
+        
+        + [Route Outlet] também é um componente e esse componente vai injetar dentro
+          dele os componentes de acordo com a navegação que for realizada, em tese,
+          representa a região de renderização dos componentes de uma rota.
+          ela é definida no nosso template HTML da página index.html (nossa SPA)
+          através da tag <router-outlet></router-outlet> ou dentro de um outro
+          componente qualquer.
+    
+    - Abaixo segue um exemplo de trechos de código de como isso funciona:
+      
+      => nav.component.html [fragmento do html do componente]
+        <a routerLink="/products"
+          Produtos
+        </a>
+      =====> A propriedade routerLink vai olhar para o arquivo app-routing.module.ts
+      de rotas procurando um objeto na lista Routes que possui uma propriedade 
+      path que seja igual a string informada, encontrado o path que coincide 
+      retorna o componente que está mapeada no objeto na propriedade component,
+      conforme fragmento abaixo.
+      
+      => app-routing.module.ts [fragmento do html do componente]
+      const routes: Routes = [{
+          path: "products",
+          component: ProductCrudComponent
+        }, {
+          path: "products/create",
+          component: ProductCreateComponent
+        }];
+      =====> Neste caso, localiza o path products então carrega e retorna 
+      o component ProductCrudComponent que será injetado no componente 
+      router-outlet para que seja renderizado, conforme fragmento a seguir.
+
+      => nav.component.html [fragmento do html do componente, que poderia ser outro qualquer]
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+      =====> Neste exemplo, o componente ProductCreateComponent será injetado
+      dentro de router-outlet que está inserido em um outro componente 
+      mat-sidenav-content .
+
+  5. Pipes (Processamentos de variáveis no HTML):
+    
+    - São processamentos realizados em cima de variáveis no HTML. Uma das 
+    características dos pipes é a possibilidade de conectar o resultado obtido
+    com um processamento de um pipe e passá-lo para ser processado em outro 
+    pipe como se fosse conexões de tubos um encadeamento, veja exemplos:
+
+    => Pipe para processamento de datas:
+    <p>
+      O vencimento é {{ produto.vencimento | date }}
+    </p>
+    =====> Suponhamos que o formato da data que vem do banco de dados é o que se
+    adequada para ser exibido para o usuário, nesse caso estamos processando para
+    exibir a data, aplicando uma formatação diferente.
+
+     => Pipe também podem receber parâmetros, como no caso no exemplo a seguir:
+    <td>
+      {{ row.price | currency: 'BRL' }}
+    </td>
+    =====> Processa o preço para que se apresente no formato de moeda e recebe o
+    parâmero após os : com 'BRL' para identificar que é no formato da moeda do
+    Brasil. Por baixo dos panos o pipe chama uma função para realizar o processamento.
+
+    => Pipe realizando processamentos em cadeia (chaining):
+    <p>
+      O vencimento é {{ produto.vencimento | date: 'fullDate' | uppercase }}
+    </p>
+    =====> No caso acima recebemos uma data processamos para mostrá-lo completa
+    por extenso e depois processamos novamente para colocar tudo em letras 
+    maiúsculas.
+
+======== Aula 522
+
+6. Observable (Programação Reativa - ReactiveX):
