@@ -427,9 +427,9 @@ Implantado o componente de navegação (nav)
         padding-right: 10px;
     }
 
-======== Aula 523
+======== Aula 524
 
-Elementos do Angular, aula teórica #01 de 03
+Elementos do Angular, aula teórica # 01 de 03
 
 1- Componentes (módulos);
 
@@ -753,6 +753,148 @@ Elementos do Angular, aula teórica #01 de 03
     por extenso e depois processamos novamente para colocar tudo em letras 
     maiúsculas.
 
-======== Aula 522
+======== Aula 525
+
+Elementos do Angular, aula teórica # 02 de 03
 
 6. Observable (Programação Reativa - ReactiveX):
+  
+    * import { Observable } from "rxjs"
+  
+  - O Angular utiliza por baixo dos panos o framework rxjs para trabalhar com o
+  conceito de programação reativa. Ou seja, o código passa a agir de acordo com
+  a ocorrência de algum evento esperado, onde este evento está sendo monitorado
+  por um Observable que comunica o fato a um outro código interessado. Esse 
+  framework utiliza a implementação do padrão de projeto Observer (Padrão de 
+  projetos mais usado na web).
+
+  - O que é o padrão de projeto Observer:
+    
+    => É um padrão orientado a evento. É a base da programação reativa. Exite 
+    uma entidade nomeada de:
+      * Subject: que é responsável por monitorar um determinado evento. As entidades
+      interessadas em determinado evento delegam esta função para este intermediário,
+      assim elas ficam "livres" para fazer outras coisas enquanto o evento não ocorre.
+      Quando o Subject detecta a ocorrência de um evento ele consulta a lista de todos
+      os Observes (interessados) no evento então ele notifica os Observers sobre
+      esta ocorrência. Ele é o intermediário entre o evento e os interessados em
+      saber que o evento ocorreu.
+
+    E exitem outras entidades chamadas de:
+      * Observer: que são as entidades que estão interessadas na ocorrência / 
+      acontecimento do evento monitorado pelo Subject. Cada Observer deve se
+      registar no Subject sinalizando seu interessem em acompanhar determinado 
+      evento. Quando um Observer é notificado sobre a ocorrência de um evento ele
+      executa internamente uma função diante da ocorrência do evento esperado;
+
+    E exitem os:
+      * Eventos: é um acontecimento esperado por um Observer e monitorado por um
+      Subject.
+  
+    => Ex.: Em um Sistema de E-Commerce:
+      ==> Evento: Compra <-- monitorado pelo Subject
+        ---> Observer interessados no evento:
+          |-> Enviar e-mail para o usuário;
+          |-> Dar baixa no estoque;
+          |-> Enviar mensagem para outro sistema para separar a mercadoria,
+          |-> etc.
+  - A reatividade no JavaScript passa ser possível a partir do momento que é se
+  utiliza uma função como parâmetro para outra função. Essas funções chamadas de
+  callbacks. 
+    => Ex. chame esta função quando a resposta da requisição chegar.
+  
+  - Promises são callbacks, porém  diferente das callbacks originais que criam um
+  "inferno" de camadas de funções umas dentro das outras, as Promises tem a capacidade
+  de realizar o encadeamento de várias chamadas, consegue compor melhor várias chamadas
+  sem ter esse inferno de aninhamento de funções. Uma característica da Promise é
+  quando ela é finalizada não há mais condições de reutilizá-la, com a evolução
+  foi possível unir a facilidades das Promises com outros benefícios aí surgem o:
+    
+    * Observables: estão dentro do rxjs que o Angular utiliza. Ele vai encapsular 
+    o padrão Observer e fornecer outras ferramentas poderosas que possui as 
+    seguintes características:
+
+      + Reusável: diferente da Promise é possível ser reutilizado;
+      
+      + Stream de Dados: Consegue monitorar um fluxo de dados ex. uma votação em 
+      tempo "real" atualizados os votos que foram dados ou apurados. Fica recebendo
+      um fluxo de dados de forma constante sem a necessidade de criar novos objetos
+      para realizar este monitoramento;
+      
+      + Operadores: exite uma serie de operadores, que são funções, que é possível
+      utilizar junto com os Observables. As Promises tem o then(), já aqui tem o 
+      map(), filter(), etc. Já vem com essas funções embutidas para serem utilizadas,
+      que ajudam a processar os dados recebidos. 
+
+    => Ex. de um Observable:
+    - Via de regra, quando se está utilizando estes recursos (Promise, Observable, etc.) 
+    estamos trabalhando com chamadas assíncronas ou seja não há uma resposta 
+    imediata no para a solicitação realizada. Um exemplo disso é quando se faz 
+    uma chamada para o backend da aplicação.
+    
+    ===> product.service.ts
+        ...
+        import { Observable } from "rxjs";
+        import { HttpClient } from "@angular/common/http";
+        import { Product } from "./product.model";
+        ...
+        baseUrl = "http://localhost:3001/products";
+        constructor(private http: HttpClient) {}
+        ...
+        criarProdutoNoBackend(product: Product): Observable<Product> { // <-- Foco neste método
+            return this.http.post<Product>(this.baseUrl, product);
+        }
+      --> Faz uma requisição do tipo HTTP POST para o backend da aplicação que pode
+      demorar alguns segundos para responder. Não responde de forma imediata e sim
+      em algum momento no futuro. Por isso esse método retorna um Observable ou 
+      poderíamos também chamar de Subject e aí no método criarProduto() do 
+      arquivo product.service.ts vai registar / inscrever um observador (Observer)
+      através do método subscribe().  
+
+    ===> product.service.ts
+        ...
+        import { Product } from './../product.model';
+        import { ProductService } from './../product.service';
+        ...
+        product: Product = {
+          name: '',
+          price: null
+        }
+        constructor(private productService: ProductService) { }
+        ...
+        criarProduto(): void { // <-- Foco neste método
+          this.productService.criarProdutoNoBackend(this.product).subscribe(() => {
+            this.productService.exibirMensagem('Produto salvo com sucesso!');
+          });
+        }
+      --> Aqui o método subscribe() está registrando um observador (Observer) 
+      que é uma função anônima do tipo arrow sem parâmero que invoca um método 
+      para exibir uma mensagem. O Observable tem a capacidade que um determinado
+      evento aconteceu que é a resposta do backend, neste caso, para requisição
+      POST e quando esta resposta chegar o método que foi passado para o subscribe()
+      será chamado. Pode ocorre um conjunto de fatores quando a responta retornar:
+      exibição de mensagem; mudança de tela; envio de e-mail; etc...
+      A retorno do método criarProdutoNoBackend é um Observable --> mas a resposta
+      do servidor backend ainda não chegou --> o subscribe() registra um (Observador)
+      Observer que aqui é uma função --> quando a resposta do servidor chegar esta
+      função observadora será disparada / executada.
+
+
+======== Aula 526
+
+Elementos do Angular, aula teórica # 03 de 03
+
+7. Services ():
+
+  - São classes que têm como principal objetivo organizar e compartilhar código
+  (métodos e dados, que são membros de uma classe) entre os componentes, diretivas.
+  A ideia é separar as responsabilidades. Tudo aquilo que é de respeito a visualização
+  do componente (parte visual do mesmo), agora sempre que se tem regras de negócio
+  que devem ser encapsuladas para acesso a API ou backend da aplicação o ideal É
+  separar as responsabilidades: algumas delas devem ser colocadas no Service do 
+  componente, tudo aquilo que não é de responsabilidade visual e sim de acesso ao
+  backend; e para viabilizar a comunicação entre componentes, compartilhar 
+  (métodos e dados). O Angula não vai força a criação de Services.
+
+  -Motivação para o Service: --> parei aqui  2m35
+
