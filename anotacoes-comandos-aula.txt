@@ -29,7 +29,7 @@ Conceitos importantes:
           --> AppFooter, 
           --> etc.
 
-O que é um componente no Angula:
+O que é um componente no Angular:
   Um trecho de código que representa um componente visual da tela que será composto
   por um: HTML (estrutura), um CSS (estilo) e um TS (comportamento)
   Ex. de arquivos de um componente:
@@ -49,7 +49,7 @@ O que é um componente no Angula:
 	nome da tag.
   
   Ex. da estrutura de comportamento do componente (TS):
-    import {Component, OnInit} from '@angula/core';
+    import {Component, OnInit} from '@angular/core';
 
     @Component({
       selector: 'fenix-home',
@@ -110,17 +110,17 @@ O que é um componente no Angula:
 
 ======== Aula 516
 
-CLI do Angula:
+CLI do Angular:
   
-  Instalando a CLI do Angula de forma global no sistema:
+  Instalando a CLI do Angular de forma global no sistema:
     $ npm i -g @angular/cli
   
-  Criando um projeto Angula com estrutura minima, sem teste:
+  Criando um projeto Angular com estrutura minima, sem teste:
     $ ng new frontendnew --minimal
     
 	* Sobre criação de rotas, diz que sim (y): Would you like to add Angular routing? (y/N) y
     * Sobre estilização escolhe-se: CSS
-    - Será criada toda a estrutura necessária para trabalhar com o Angula
+    - Será criada toda a estrutura necessária para trabalhar com o Angular
 
   Entra na pasta criada do frontendnew:
     $ cd frontendnew
@@ -195,7 +195,7 @@ no component da em questão, ex.:
 
 Instalando os componentes do Material Design 
 
-1- com a aplicação Angula parada;
+1- com a aplicação Angular parada;
 2- Executa o seguinte comando:
   $ ng add @angular/material
   Quando da instalação será solicitado escolher as o esquema de cor do projeto,
@@ -492,7 +492,7 @@ Elementos do Angular, aula teórica # 01 de 03
       asterisco, ex.: <tag class="name-class" *nomeDiretiva></tag>; 
       
       Ex. de uma diretiva de estrutura (Structural Directives) que já vem 
-      embutida no Angula a *ngIf e a *ngFor. São dois exemplos de vários outros
+      embutida no Angular a *ngIf e a *ngFor. São dois exemplos de vários outros
       que existem no Angular:
 
       <form *ngIf="product" class="product-form">
@@ -887,14 +887,199 @@ Elementos do Angular, aula teórica # 03 de 03
 7. Services ():
 
   - São classes que têm como principal objetivo organizar e compartilhar código
-  (métodos e dados, que são membros de uma classe) entre os componentes, diretivas.
+  (métodos e dados, que são membros de uma classe) entre os componentes, diretivas e 
+  compartilhar também dados, ex. um contador dentro do service.
   A ideia é separar as responsabilidades. Tudo aquilo que é de respeito a visualização
   do componente (parte visual do mesmo), agora sempre que se tem regras de negócio
   que devem ser encapsuladas para acesso a API ou backend da aplicação o ideal É
   separar as responsabilidades: algumas delas devem ser colocadas no Service do 
   componente, tudo aquilo que não é de responsabilidade visual e sim de acesso ao
   backend; e para viabilizar a comunicação entre componentes, compartilhar 
-  (métodos e dados). O Angula não vai força a criação de Services.
+  (métodos e dados). O Angular não vai força a criação de Services.
 
-  -Motivação para o Service: --> parei aqui  2m35
+  -Motivação para o Service: quando os componentes compartilham uma determinada
+  lógica de negócio ou essa lógica que está no componente não se refere a parte 
+  visual do mesmo e/ou está se repetido em vários componentes; isto é uma boa 
+  Motivação para criar um service, ex.:
+  +----------------+              +----------------+
+  | Componente #01 |              | Componente #02 |
+  |   HTML |  CSS  |              |   HTML |  CSS  |
+  |       TS       |              |       TS       |
+  | Log.01 | Log.x |              | Log.02 | Log.x |
+  | Log.y  | Log.z |              | Log.y  | Log.w |
+  +----------------+              +----------------+
+  => No exemplo temos dois componentes que compartilham a lógica x, y, z e w, que são
+  regras de negócio e não fazem parte da visualização do componente. E cada
+  um deles possui uma lógica própria que não é compartilhada (lógica 01 e 02),
+  que são lógicas ligadas a parte visual do componente. Neste caso, é possível
+  remover estas lógicas dos dois componentes (lógicas x, y, z e w) e colocá-las em
+  um service, veja: 
+                    +----------------+
+                    |    Service     |
+                    | Log.x  | Log.y |
+                    | Log.z  | Log.w |
+                    +----------------+
+  => Mesmo as lógicas z e w que não estão duplicadas mas não fazem parte da visualização
+  do componente e não fazem sentido estar dento dele, elas podem ser deslocadas 
+  para o service. Uma observação importante é um service deve agrupar lógicas coerentes
+  com o tema a que se propõe o service, assim sendo, um componente pode ter mais
+  de um service com lógicas coerentes que aglutina dentro de si. O SERVICE DEVE
+  CONTER UM GRUPO COERENTE DE FUNCIONALIDADES PARA DETERMINADO COMPONENTE.
+  Ex. Cadastro de Produto: um service que aglutina todas as funcionalidades de um
+  CRUD neste service, porém na hora do Cadastro de Clientes as funcionalidades
+  deste componente não é recomendando misturar com as funcionalidades de Cadastro
+  de Produtos. O componente deve se forcar mais na parte visual, de renderização.
 
+  ==> Para criar um componente usamos:
+      $ ng generate service services/product # ou de forma resumida
+      $ ng g s services/product # a ultima parte é o path do service a ser gerado
+
+  ===> Representação de um classe que exprime um service:
+      product.service.ts (atenção para a guideline / diretriz para nomeação de arquivos no Angular)
+        ...
+        @Injectable({
+          providedIn: "root",
+        })
+        export class ProductService {
+          ...
+        }
+
+      * Uma coisa importante sobre este código é o decoration @Injectable: O que
+      está sendo dito em linhas gerais é o seguinte, que esta classe será detectada 
+      pelo Angular e será possível injetá-la em outras classes. Isso irá possibilitar
+      por exemplo utilizar o service dentro dos componentes através da injeção de
+      dependência.
+      
+      * Outra coisa é a chave providedIn: "root" : esta chave está sinalizado que
+      o injetor é o injetor raiz da aplicação. Só existe um injetor raiz da aplicação
+      e isso significa que no contexto de toda a aplicação só existirá um único
+      ProductService, por exemplo. Sempre que for injetado o product service em
+      um componente qualquer o Angular sempre irá retornar a mesma instância, este
+      comportamento está relacionado ao padrão de projeto Singleton, onde é criado
+      uma única instancia de uma classe através de um construtor privado fornecendo
+      um método get que retorna sempre a mesma instância criada. O Angular faz tudo
+      isso por baixo dos panos.
+        
+        + root é um apelido ou alias para o nome da nossa aplicação real o AppModule.
+        Ele é o que se chama de RootInjector (o injetor principal). Quando se diz
+        que o providedIn é o "root" é o mesmo que dizer que é o AppModule. Podemos
+        substituir o nome "root" pela referencia do módulo AppModule (fazendo o 
+        import do modulo antes) que é a mesma coisa, neste caso o escopo deste 
+        service será AppModule que é o módulo raiz (root).
+
+        + Um injector pode ser de dois tipos: isso altera o escopo de utilização
+          de um determinado service
+
+          1> ModuleInjector: restringe o escopo de atuação de determinado módulo:
+            
+            a) @NgModule: significa que dentro do escopo do módulo será gerada
+              apenas uma única instância do service sinalizado com esta annotation
+              (@NgModule) e que é referenciado em Providers (este services).
+            
+            b) @Injectable: pode-se da mesma forma ter apenas uma instância para
+              toda aplicação se associado ao modulo raiz dela (root) ou para apenas
+              um determinado módulo que seja definido ex.: módulo de autenticação
+              AuthModule:
+              @Injectable({
+                providedIn: AuthModule,
+              })
+
+          2> ElementInjector:
+            a) @Directive: dentro de uma diretiva (de atributo ou estrutural) 
+              pode definido nesta annotation para a chave "providers:" uma lista
+              de services que se deseja adicionar nesta diretiva do componente.
+              Está informando que se quer ter uma instância de cada service
+              própria dentro desta diretiva específica de um componente. A instância
+              será dedicada para a diretiva especificada.
+
+            b) @Component: dentro de um componente pode definido nesta annotation
+              para a chave "providers:" uma lista de services que se deseja 
+              adicionar neste componente específico apenas. Está informando-se 
+              que se quer ter uma instância de cada service própria dentro do 
+              componente específico. A instância será dedicada para o componente
+              especificado.
+
+          + Em aplicações mais complexas é bom saber definir o escopo de cada 
+            services a depender de cada módulo ou elemento. Restringindo o acesso
+            aos services, de acordo com o escopo desejado e necessário. mais
+            informações na documentação: http://angular.io/guide/hierarchical-dependency-injection
+
+8. Injeção de Dependência ():
+
+  - É um padrão no qual a classe recebe as dependências de uma fonte externa ao
+  invés de cria por conta própria, ou seja, no cenário em que uma classe A precisa
+  da classe B, a classe A vai criar uma instância da classe B, porém na injeção de
+  dependência isso vai ser invertido, ou seja, é um padrão onde a classe dependente (A)
+  recebe a dependência de uma fonte externa ao invés de criar por conta própria.
+  Assim a classe A ao invés de instância a classe B ela recebe de uma fonte externa,
+  como por exemplo pelo construtor ou outro mecanismo (@decoration), uma instância da
+  classe B da qual é dependente. Dependendo da linguagem e do framework que será
+  utilizado a forma de implementação da injeção de dependência pode ser diferente.
+
+  => Um exemplo, cenário SEM Injeção de Dependência:
+    class Carro {    --------- depende ---->  class Motor {
+      motor: Motor                            
+      constructor(){                          }
+        this.motor = new Motor()
+      }
+    }
+  ==> Neste caso acima a classe carro depende da classe motor e está instanciando
+  o motor no construtor, automaticamente quando uma nova instância de carro é 
+  criada. Neste caso quem foi RESPONSÁVEL por instancia a classe motor foi o carro.
+  Não há injeção de dependência. Nesse caso se algo mudar em motor tipo, for 
+  necessário adicionado quantidade de cilindros para instanciar um motor vai gerar
+  um quebra no código na instanciação do carro, pois dentro do construtor do não
+  há previsão de número de cilindros para o motor, logo isto é um problem, como
+  resolver isso? Qual a solução para o problema abaixo?
+
+    class Carro {    ---- instancia um -----------> class Motor {
+      motor: Motor                                    cilindrada: number // <- mudança novo atributo necessário para construir a classe
+      constructor(){                                  constructor(cilindrada: number) { 
+        this.motor = new Motor() // <- erro aqui          this.cilindrada = cilindrada
+      }                                               }
+    }                                                }
+
+  => Neste outro exemplo COM Injeção de Dependência:
+    class Carro {    <------- recebe um ------------------- class Motor {
+      motor: Motor                                            cilindrada: number // <- mudança novo atributo necessário para construir a classe
+      constructor(motor: Motor){ // <- injetando dep. ext.     constructor(cilindrada: number) { 
+        this.motor = motor                                     this.cilindrada = cilindrada
+      }                                                       }
+    }                                                        }
+  ===> No exemplo acima carro agora depende que alguém, por exemplo uma fábrica,
+  instancie um motor e passe-o para o construtor da classe Carro. O carro agora
+  não precisa se preocupar com as mudanças que são realizadas em motor, apenas
+  necessita receber uma instância de motor para construir o carro, isso é injeção
+  de dependência. O framework Angular irá se incubi de criar a instância e injetá-la
+  na classe decorada que necessita daquela dependência.
+
+  Estamos solucionado um problema de Inversão de Controle através
+  da Injeção de Dependência (pattern), que são coisas distintas. Aqui o problema
+  foi resolvido através do Constructor Injection, ou seja, injetamos uma dependência 
+  de uma classe através do construtor desta classe. Já inversão de dependência é
+  a estratégia de depender de interfaces ou classes abstratas, ao invés de 
+  classes concretas.
+  Fontes para estudar:
+  https://www.devmedia.com.br/inversao-de-controle-x-injecao-de-dependencia/18763
+  https://pt.stackoverflow.com/questions/21319/quais-as-diferen%C3%A7as-entre-inje%C3%A7%C3%A3o-de-depend%C3%AAncia-e-invers%C3%A3o-de-controle
+  https://medium.com/contexto-delimitado/o-princ%C3%ADpio-da-invers%C3%A3o-de-depend%C3%AAncia-d52987634fa9
+
+  => Injeção de Dependência no Angular: Dentro do Angular exite um framework para
+  injeção de dependência (um framework dentro do framework).
+  Toda vez que uma classe é decorada com @Injectable estamos dizendo para o Angular
+  que essa classe pode ser: 
+    (1)- Injetada em outra classe; e que 
+    (2)- E que o Angular deve instanciar esta classe automaticamente para ser
+    utilizada, na maioria dos casos existirá apenas um instância para toda a 
+    aplicação, um Singleton;
+  
+  ===> No momento em que o Componente for ser criado, o Angula como já tem na
+  memória uma instância, por exemplo, de um Service que o componente necessita 
+  em seu construtor, nesse momento o Angular passa este Service (Singleton) para
+  o construtor do componente que instancia-o e coloca na memória à disposição para
+  ser utilizado.
+
+    * Singleton: services são Singleton (apenas uma instância) dentro do escopo 
+    de um injector.
+  
+  
