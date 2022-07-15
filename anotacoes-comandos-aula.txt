@@ -1082,4 +1082,11 @@ Elementos do Angular, aula teórica # 03 de 03
     * Singleton: services são Singleton (apenas uma instância) dentro do escopo 
     de um injector.
   
-  
+======== Aula 526
+
+Componente inicio (Home / Início)
+
+Comunicação de dados entre componentes com service (alterando o conteúdo de
+outro componente)
+
+
