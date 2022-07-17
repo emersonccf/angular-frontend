@@ -1082,11 +1082,45 @@ Elementos do Angular, aula teórica # 03 de 03
     * Singleton: services são Singleton (apenas uma instância) dentro do escopo 
     de um injector.
   
-======== Aula 526
+======== Aula 527
 
 Componente inicio (Home / Início)
 
+Para criar um novo componente que irá representar a página Home / Início /
+Landing Page iremos utilizar o seguinte comando, informando o path onde será
+criado o componente (cada desenvolvedor deve criar sua organização de como
+os componentes serão criados e agrupados de forma coerente, aqui foi adotado
+que os componentes que representam as páginas serão criados dentro de uma pasta
+chamada de views que seriam as páginas às visões de cada página a ser exibida),
+assim o caminho ficara assim views/home que será criado dentro da pasta do projeto
+atual em /src/app/views/home e os arquivos serão criados e nomeados da seguinte
+forma: 
+  - home.component.css ;
+  - home.component.html ; e
+  - home.component.ts
+
+$ ng generate component views/home # ou
+$ ng g c views/home
+
+Dentro da pasta components foi previsto para serem salvos neste caminho 
+(/src/app/components/...) os componentes de dois tipos:
+  
+  - templates: que são partes fixas e que pertencem à maioria das páginas a serem
+    exibida (/src/app/components/templates/...) com por exemplo:
+      * header (cabeçalho) (/src/app/components/templates/header);
+      * nav (navegação - sidenav e side-content) (/src/app/components/templates/nav);
+      * footer (rodapé) (/src/app/components/templates/footer);
+
+  - product: onde serão aglutinados todos os componentes relacionados à produtos
+    utilizados neste exemplo de crud. Nesta página também ficarão os services e 
+    model relacionados ao mesmo componente
+
+
+  
+
+
+----------------------------------------------------------------------------
+Alterando cabeçalho da App  
 Comunicação de dados entre componentes com service (alterando o conteúdo de
 outro componente)
-
 

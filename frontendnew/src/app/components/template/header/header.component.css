@@ -13,10 +13,26 @@
     max-width: 200px;
 }
 
-.header .title-group{
+.header .title-group {
     padding-left: 25px;
 }
 
 .header .title-group i {
     padding-right: 5px;
+}
+
+.example-icon {
+    border: none;
+    margin-right: 10px;
+    cursor: pointer;
+    /* background-color: white !important; */
+}
+
+.example-icon:hover {
+    background-color: #cacaca;
+    border-radius: 5px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
 }
