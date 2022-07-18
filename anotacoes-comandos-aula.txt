@@ -4,6 +4,10 @@ Exemplos de website em Angular:
   - https://github.com/gothinkster/angular-realworld-example-app
   - https://github.com/kdechant/angular-django-csrf-example (com Django)
 
+Arquivos fontes (repositório) do livro: ng-book: The Complete Guide to Angular 11 (2020)
+  - https://github.com/RHieger/ng-book-angular-8
+Este livro é muito bom e pode se encontrado em PDF em inglês: https://pt.b-ok.lat/s/?q=ng-book%3A+The+Complete+Guide+to+Angular+11
+
 Instalar pacotes:
     $ npm i json-server
 
