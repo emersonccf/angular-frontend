@@ -1293,7 +1293,62 @@ necessidade.
 
 ======== Aula 530
 
-Diretivas na prática # 01 de 02
+Diretivas na prática # 01 de 02 (DIRETIVA DE ESTILIZAÇÃO)
+
+-Exemplo de DIRETIVA DE ESTILIZAÇÃO (apenas como mecanismo de aprendizagem),
+vamos CRIAR E USAR a diretiva (que pode ser em uma tag HTML ou em um componente):
+
+No componente footer (src/app/components/template/footer/footer.component.html)
+exite um coração que foi definido em vermelho por uma classe css chamada de red em
+style.css. Vamos criar uma diretiva de estilização para modificar a cor da
+tag/elemento no lugar da classe css, para isso faremos o seguinte:
+
+1- Criaremos uma diretiva através do comando:
+  $ ng g d directives/red # será criada uma diretiva chamada red na pasta src/app/directives/
+
+Com isso foi criado o arquivo red.directive.ts no caminho especificado e foi atualizado
+o app.module.ts com o import desta diretiva e na declaração também.
+
+2- Vamos abrir o arquivo red.directive.ts e realizar as seguintes alterações:
+  a) Injetar uma dependência do elemento que queremos modificar através de inclusão
+    de um atributo privado no construtor da diretiva; esse atributo será do ElementRef;
+    ...
+    constructor(private el: ElementRef) { }
+    ...
+
+3- Dentro do construtor iremos informa que o elemento nativo ira receber um estilo
+  de cor que iremos definir com #e35e6b, que é a cor que esperamos que o nosso
+  coração tenha:
+  ...
+  el.nativeElement.style.color = '#e35e6b'
+  ...
+
+4- Definir o seletor de nossa diretiva, ele foi definido automaticamente como appRed
+  mas nada impede que de que ele seja alterado para outro nome;
+  ...
+  @Directive({
+    selector: '[appRed]' // <-- nome do seletor de nossa diretiva
+  })
+  ...
+
+5- Vamos para o arquivo footer.component.html e lá faremos uso de nossa diretiva
+  criada. Iremos aplicá-la na tag desejada através do nome do seletor dela appRed,
+  conforme podemos ver abaixo, removendo a classe red css que foi aplicada anteriormente
+  e aplicado na tag fora das aspas nossa diretiva:
+  ...
+  <i class="material-icons v-middle" appRed> <!-- nossa diretiva aplicada aqui -->
+    favorite
+  </i>
+  ...
+
+Podemos fazer a atualização da página para verificar que nossa diretiva foi aplicada
+com sucesso.
+
+======== Aula 531
+
+Diretivas na prática # 01 de 02 (DIRETIVA DE ESTRUTURAL)
+
+-Exemplo de DIRETIVA DE ESTRUTURAL (apenas como mecanismo de aprendizagem).
 
 ----------------------------------------------------------------------------
 Alterando cabeçalho da App  
