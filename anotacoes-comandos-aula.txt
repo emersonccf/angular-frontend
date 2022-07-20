@@ -195,7 +195,7 @@ no component da em questão, ex.:
   <h2>Olá o nome desta aplicação é: {{ title }}</h2> <!-- variável title 
   interpolada através do {{ }} exibindo seu valor no browser. -->
 
-======== Aula 519
+======== Aula 521
 
 Instalando os componentes do Material Design 
 
@@ -211,7 +211,7 @@ Instalando os componentes do Material Design
     * Include the Angular animations module? Include and enable animations
   Será feita a instalação conforme as configurações selecionadas.
 
-======== Aula 520
+======== Aula 522
 
 Implementado o componente header (cabeçalho)
 
@@ -302,7 +302,7 @@ temos que importá-lo:
         padding-right: 5px;
     }
 
-======== Aula 521
+======== Aula 523
 
 Implementado o componente rodapé (Footer)
 
@@ -362,7 +362,7 @@ Implementado o componente rodapé (Footer)
           vertical-align: middle;
       }  
 
-======== Aula 522
+======== Aula 524
 
 Implantado o componente de navegação (nav)
 
@@ -431,7 +431,7 @@ Implantado o componente de navegação (nav)
         padding-right: 10px;
     }
 
-======== Aula 524
+======== Aula 525
 
 Elementos do Angular, aula teórica # 01 de 03
 
@@ -757,7 +757,7 @@ Elementos do Angular, aula teórica # 01 de 03
     por extenso e depois processamos novamente para colocar tudo em letras 
     maiúsculas.
 
-======== Aula 525
+======== Aula 526
 
 Elementos do Angular, aula teórica # 02 de 03
 
@@ -884,7 +884,7 @@ Elementos do Angular, aula teórica # 02 de 03
       função observadora será disparada / executada.
 
 
-======== Aula 526
+======== Aula 527
 
 Elementos do Angular, aula teórica # 03 de 03
 
@@ -1086,7 +1086,7 @@ Elementos do Angular, aula teórica # 03 de 03
     * Singleton: services são Singleton (apenas uma instância) dentro do escopo 
     de um injector.
   
-======== Aula 527
+======== Aula 528
 
 Componente inicio (Home / Início)
 
@@ -1115,13 +1115,185 @@ Dentro da pasta components foi previsto para serem salvos neste caminho
       * nav (navegação - sidenav e side-content) (/src/app/components/templates/nav);
       * footer (rodapé) (/src/app/components/templates/footer);
 
-  - product: onde serão aglutinados todos os componentes relacionados à produtos
-    utilizados neste exemplo de crud. Nesta página também ficarão os services e 
-    model relacionados ao mesmo componente
-
-
+  - product: onde serão aglutinados todos os componentes relacionados aos produtos
+    utilizados neste exemplo de crud. Nesta pasta também ficarão os services e 
+    model relacionados ao mesmo componente;
   
+  - views: onde serão aglutinados os componentes responsáveis pela exibição de
+  uma "página inteira", que será localizado dentro de um container do mat-sidenav-container.
+  Estes componentes representam páginas onde será possível realizar navegação entre elas.
 
+Vamos continuar no procedimento de implantação da página Home / inicio:
+
+  1- No arquivo nav.component.html iremos adicionar, após </mat-sidenav> o componente
+  app-home dentro do mat-sidenav-content que é o componente responsável por apresentar
+  o conteúdo da navegação do mat-sidenav e das demais rotas necessária para o
+  funcionamento deste CRUD, o seguinte conteúdo:
+    <mat-sidenav-content class="content">
+        <app-home></app-home> <!-- nosso componente que representa a view home, que será substituído em breve por um router para permitir a navegação em diversas telas (páginas, view ou componentes) diferentes -->
+    </mat-sidenav-content>
+  => Pode ser utilizada alguma classe de estilização para melhorar esta apresentada
+  através do arquivo nav.component.html para estilizar a classe que definimos como
+  class="content" na tag deste componente, com o seguinte:
+    .content {
+      padding: 16px;
+      background-color: #fff;
+    }
+
+  2- Dentro do app.module.ts iremos importar mais um componente que irenos necessitar
+  para utilizar dentro do componente home, o componente é o card do Material, fazendo
+  o seguinte:
+  Dento de app.module.ts faremos o import de:
+    ...
+    import { MatCardModule } from '@angular/material/card'
+    ...
+  E neste mesmo arquivo vamos adicionar o módulo importado na chave import que é
+  uma lista:
+    import: [
+      ...
+      MatCardModule,
+      ...
+    ]
+
+  3- Agora podemos utilizar os componentes deste módulo em nossa aplicação. Iremos
+  adicionar dentro co componente home.component.htm o seguinte código:
+    <mat-card class="home mat-elevation-z4">
+      <mat-card-title class="title">
+          Seja bem-vindo!
+      </mat-card-title>
+      <mat-card-subtitle class="subtitle">
+          Sistema exemplo para cadastro (CRUD) em Angular
+      </mat-card-subtitle>
+    </mat-card>  
+  => E iremos aplicar a seguinte estilização através do arquivo home.component.css:
+    .home .title {
+      font-size: 3rem;
+      font-weight: 300;
+      line-height: 1.2;
+    }
+    .home .subtitle {
+      font-size: 1.1rem;
+    }
+  => class="mat-elevation-z4" : classe de estilização é integrada a este elemento
+  e dará um efeito 3d com sombra e elevação de destaque ao nosso card, consute a
+  documentação do material para maiores detalhes em: https://material.angular.io/guide/elevation
+
+
+======== Aula 529
+
+Navegando entre componentes
+
+Vamos criar agora nosso componente view que irá abrigar os demais componentes para
+realizar o cadastro de produtos. Ele será chamado de product-crud. Nele será possível
+chamar as quatro operações: Create, Read, Update e Delete. Para cada operação poderíamos
+ter uma tela específica. Create e Update poderiam compartilhar a mesma tela, por exemplo.
+O Delete não necessita de uma tela específica, pode ser utilizado, por exemplo, um botão ao
+lado do produto na tela Read.
+
+Este componente seria como um "roteador" entre as demais componentes do CRUD, onde
+todos os demais componentes estariam "dentro" dele e seriam chamados conforme a
+necessidade.
+
+1- Vamos criar este componente com o comando já conhecido:
+  $ ng g c views/product-crud
+
+  Teremos dentro da pasta /src/app/view/product-crud os arquivos de nossa app.
+
+2- Vamos para o template de nosso componente de navegação e alteramos provisoriamente
+  o código de componente mat-sidenav-content para:
+    ...
+    <mat-sidenav-content class="content">
+      <app-product-crud></app-product-crud>
+    </mat-sidenav-content>
+    ...
+
+  Após salvar o arquivo nav.component.html será possível visualizar o componente 
+  sendo renderizado na tela com o texto: "product-crud works!". Mas o que queremos
+  é ao clicar nos botões do sidenav navegar entre as views home, product-crud, etc
+  sem precisar ficar mudando manualmente como fizemos acima, para isso iremos utilizar
+  o esquema de rotas do angula que já vem integrado e pronto para que possamos usar.
+  Ele também tem o comportamento de um componente. E iremos fazer o seguinte:
+
+3- No arquivo nav.component.html onde tem <app-product-crud></app-product-crud>
+  nós iremos substituir por <router-outlet></router-outlet>. Isso significa que
+  o componente/sistema de rotas incluído na criação na inicialização será utilizado
+  para navegar entre as telas/componentes/views do nosso sistema, o template agora
+  ficará assim:
+    ...
+    <mat-sidenav-content class="content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+    ...
+
+4- Dentro de src/app/app-routing.module.ts nós iremos adicionar nossos objetos que
+  representam rotas dentro do array chamado de Routes, neste aquivo, a estrutura básica
+  de cada objeto desta lista deve ser:
+    a) path: define a url ou caminho para o recurso que estamos querendo carregar/renderizar na tela;
+    b) component: define o nosso componente (página/template/view) associado ao path definido acima;
+    c) title: define qual o título nossa página deve ter ao navegar para o path definido.
+  Este são apenas alguns dos atributos possíveis para este tipo de objeto Route.
+
+  Deste modo faremos a inserção dos seguintes objetos Router no Array Routers:
+    ...
+    // importes necessários para serem utilizados nas rotas
+    import { HomeComponent } from './views/home/home.component';
+    import { ProductCrudComponent } from './views/product-crud/product-crud.component';
+    ...
+    const appName: string = "MyCRUD"
+    const routes: Routes = [
+      {
+        path: "",
+        component: HomeComponent,
+        title: appName + " | " + "Home",
+      },
+      {
+        path: "products",
+        component: ProductCrudComponent,
+        title: appName + " | " + "Produtos",
+      }
+    ];
+    ...
+
+  Acima temos duas rotas básica:
+    - A rota raiz (root): definida por uma string em vazia "", que a representa,
+      que vai renderizar a nossa view home;
+    - A rota para produtos: definida por uma string "products", que irá renderizar
+      nosso CRUD de produtos.
+  
+5- Agora iremos em nav.component.html para adicionar a propriedade routerLink=""
+  nas tags <a>, em nosso caso, para permitir a navegação através no sidenav,
+  conforme código abaixo:
+  ...
+  <mat-nav-list class="nav-list">
+    <a mat-list-item routerLink=""> <!-- rota para navegação para view de Home -->
+        <i class="material-icons">
+            home
+        </i>
+        Início
+    </a>
+    <a mat-list-item routerLink="products"> <!-- rota para navegação para view de CRUD de produtos -->
+        <i class="material-icons">
+            storefront
+        </i>
+        Produtos
+    </a>
+  </mat-nav-list>
+  ...
+
+6- Outro ajuste é ao clicar na logo mudar para a página home, vamos abrir o arquivo
+  header.component.html e fazer o seguinte ajuste:
+  ...
+  <span>
+    <a routerLink="">  <!-- rota para navegação para view de Home, a rota raiz da aplicação -->
+        <img class="logo" src="assets/img/logo.png" alt="logo">
+    </a>
+  </span>
+  ...
+
+
+======== Aula 530
+
+Diretivas na prática # 01 de 02
 
 ----------------------------------------------------------------------------
 Alterando cabeçalho da App  
