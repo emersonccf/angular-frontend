@@ -1,0 +1,8 @@
+.content>form {
+    display: flex;
+    flex-direction: column;
+}
+
+.margin-left {
+    margin-left: 3rem;
+}

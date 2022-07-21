@@ -29,11 +29,11 @@
     /* background-color: white !important; */
 }
 
+.menu-icon {
+    margin-right: 10px;
+}
+
 .example-icon:hover {
     background-color: #cacaca;
     border-radius: 5px;
-}
-
-.example-spacer {
-    flex: 1 1 auto;
 }
