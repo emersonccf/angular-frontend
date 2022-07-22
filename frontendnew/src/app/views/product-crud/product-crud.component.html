@@ -2,48 +2,4 @@
     <mat-icon>create</mat-icon> Novo Produto
 </button>
 
-<div class="mat-elevation-z5 container">
-    <mat-card>
-        <mat-card-title class="title">
-            Lista de Produtos
-        </mat-card-title>
-        <mat-card-content class="card-content">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z1 table">
-                <!-- id Column -->
-                <ng-container matColumnDef="id">
-                    <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
-                    <mat-cell *matCellDef="let product"> {{product.id}} </mat-cell>
-                </ng-container>
-                <!-- name Column -->
-                <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
-                    <mat-cell *matCellDef="let product"> {{product.name}} </mat-cell>
-                </ng-container>
-                <!-- price Column -->
-                <ng-container matColumnDef="price">
-                    <mat-header-cell *matHeaderCellDef> Preço </mat-header-cell>
-                    <mat-cell *matCellDef="let product"> {{product.price}} </mat-cell>
-                </ng-container>
-                <!-- actions Column -->
-                <ng-container matColumnDef="actions">
-                    <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
-                    <mat-cell *matCellDef="let product">
-                        <button mat-icon-button>
-                            <!--TODO: routerLink=""  -->
-                            <mat-icon color="primary">edit_note</mat-icon>
-                        </button>
-                        <samp class="margin-right"></samp>
-                        <button mat-icon-button>
-                            <!-- TODO: routerLink=""  -->
-                            <mat-icon color="warn">delete</mat-icon>
-                        </button>
-                    </mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-            </table>
-
-        </mat-card-content>
-    </mat-card>
-</div>
+<app-product-read></app-product-read>
