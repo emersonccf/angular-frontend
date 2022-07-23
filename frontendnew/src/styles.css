@@ -24,3 +24,43 @@ body {
 .margin-right {
     margin-right: 3rem;
 }
+
+.primary {
+    background-color: #0d6efd;
+}
+
+.second {
+    background-color: #6c757d;
+}
+
+.success {
+    background-color: #198754;
+}
+
+.danger {
+    background-color: #dc3545;
+}
+
+.warning {
+    background-color: #ffc107;
+}
+
+.info {
+    background-color: #0dcaf0;
+}
+
+.dark {
+    background-color: #000;
+}
+
+.light {
+    background-color: #f8f9fa;
+}
+
+.font-white {
+    color: #fff;
+}
+
+.font-black {
+    color: #000;
+}

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HeaderService } from '../../template/header/header.service';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-create',
@@ -8,15 +10,24 @@ import { HeaderService } from '../../template/header/header.service';
 })
 export class ProductCreateComponent implements OnInit {
 
-  constructor(private headerService: HeaderService) {
+  constructor(
+    private headerService: HeaderService,
+    private router: Router,
+    private productService: ProductService) {
     this.headerService.headerData = {
-      title: "Cadastro de Produtos",
-      icon: "edit",
-      routeUrl: "/products"
+      title: 'Cadastro de Produtos',
+      icon: 'edit',
+      routeUrl: '/products'
     }
   }
 
   ngOnInit(): void {
+  }
+
+  createProduct(): void {
+    this.productService.showMessage('Produto criado com sucesso!',
+      ['success', 'font-white'])
+    this.router.navigate(['/products'])
   }
 
 }
