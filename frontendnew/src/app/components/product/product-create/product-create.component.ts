@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { HeaderService } from '../../template/header/header.service'
-import { ProductModel } from '../product.model'
+import { Product } from '../product.model'
 import { ProductService } from '../product.service'
 
 @Component({
@@ -11,7 +11,7 @@ import { ProductService } from '../product.service'
 })
 export class ProductCreateComponent implements OnInit {
 
-  product: ProductModel = {
+  product: Product = {
     name: '',
     price: null
   }

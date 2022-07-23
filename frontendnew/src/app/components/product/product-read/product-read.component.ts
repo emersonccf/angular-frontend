@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../../template/header/header.service';
-import { ProductModel } from '../product.model';
+import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { ProductService } from '../product.service';
 })
 export class ProductReadComponent implements OnInit {
 
-  products: ProductModel[]
+  products: Product[]
   displayedColumns = ['id', 'name', 'price', 'actions']
 
   constructor(

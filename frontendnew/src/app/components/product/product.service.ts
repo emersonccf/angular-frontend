@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { Observable } from 'rxjs'
-import { ProductModel } from './product.model'
+import { Product } from './product.model'
 @Injectable({
   providedIn: 'root'
 })
@@ -23,12 +23,22 @@ export class ProductService {
     })
   }
 
-  createProduct(product: ProductModel): Observable<ProductModel> {
-    return this.httpClient.post<ProductModel>(this.baseUrl, product)
+  createProduct(product: Product): Observable<Product> {
+    return this.httpClient.post<Product>(this.baseUrl, product)
   }
 
-  readProducts(): Observable<ProductModel[]> {
-    return this.httpClient.get<ProductModel[]>(this.baseUrl)
+  readProducts(): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(this.baseUrl)
+  }
+
+  readByIdProduct(id: Number): Observable<Product> {
+    const url = `${this.baseUrl}/${id}`
+    return this.httpClient.get<Product>(url)
+  }
+
+  updateProduct(product: Product): Observable<Product> {
+    const url = `${this.baseUrl}/${product.id}`
+    return this.httpClient.put<Product>(url, product)
   }
 
 }

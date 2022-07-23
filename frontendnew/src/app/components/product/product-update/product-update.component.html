@@ -1,39 +1,40 @@
 <div class="mat-elevation-z5 container">
     <mat-card>
         <mat-card-title class="title">
-            Adicionar Novo Produto
+            Atualizar Produto: ID 👉 {{ product.id }}
         </mat-card-title>
         <mat-card-content class="card-content">
             <form>
-                <mat-form-field appearance="outline" *ngIf="product.id">
+
+                <mat-form-field appearance="outline">
                     <mat-label>Id do Produto: </mat-label>
                     <input type="number" matInput disabled [value]="product.id" name="id">
                 </mat-form-field>
 
-                <mat-form-field class="example-full-width" appearance="fill">
+                <mat-form-field appearance="outline">
                     <mat-label>Nome do Produto: </mat-label>
                     <input type="text" matInput placeholder="Informe a descrição do produto" [(ngModel)]="product.name"
                         name="name">
                 </mat-form-field>
 
-                <mat-form-field class="example-full-width" appearance="fill">
+                <mat-form-field appearance="outline">
                     <mat-label>Preço: </mat-label>
                     <input type="number" step="0.01" matInput placeholder="Informe o peço do produto"
                         [(ngModel)]="product.price" name="prince">
+                    <span matPrefix>R$&nbsp;&nbsp;</span>
                 </mat-form-field>
 
             </form>
 
             <div>
-                <button mat-raised-button color="primary" (click)="createProduct()">
-                    <mat-icon>save</mat-icon> Salvar
+                <button mat-raised-button color="primary" (click)="updateProduct()">
+                    <mat-icon>save</mat-icon> Atualizar
                 </button>
                 <samp class="margin-left"></samp>
                 <button mat-raised-button color="warn" routerLink="/products">
                     <mat-icon>close</mat-icon> Cancelar
                 </button>
             </div>
-
         </mat-card-content>
     </mat-card>
 </div>
