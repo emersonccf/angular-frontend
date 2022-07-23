@@ -52,3 +52,11 @@ https://levitrares.com/host-https-qastack.com.br/programming/45159066/md-table-h
     background-color: #3f51b5;
     color: #fff;
 }
+
+::ng-deep .mat-tooltip {
+    font-size: 0.7rem;
+    background-color: rgba(63, 81, 181, 0.733);
+    padding: 1px;
+    color: #fff !important;
+    margin-top: 0.2rem !important;
+}

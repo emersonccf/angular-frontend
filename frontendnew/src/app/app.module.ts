@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatTableModule } from '@angular/material/table'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 import { RedDirective } from './directives/red.directive';
 
@@ -53,6 +54,7 @@ import { ProductReadComponent } from './components/product/product-read/product-
     MatInputModule,
     MatTableModule,
     MatSnackBarModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

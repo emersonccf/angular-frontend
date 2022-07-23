@@ -24,12 +24,12 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
                     <mat-cell *matCellDef="let product">
-                        <button mat-icon-button>
+                        <button mat-icon-button matTooltip="Editar">
                             <!--TODO: routerLink=""  -->
                             <mat-icon color="primary">edit_note</mat-icon>
                         </button>
                         <samp class="margin-right"></samp>
-                        <button mat-icon-button>
+                        <button mat-icon-button matTooltip="Excluir">
                             <!-- TODO: routerLink=""  -->
                             <mat-icon color="warn">delete</mat-icon>
                         </button>
