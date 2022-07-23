@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../../template/header/header.service';
 import { ProductModel } from '../product.model';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-read',
@@ -9,22 +10,12 @@ import { ProductModel } from '../product.model';
 })
 export class ProductReadComponent implements OnInit {
 
-  products: ProductModel[] = [
-    {
-      id: 1,
-      name: "Lápis de madeira",
-      price: 5.99
-    },
-    {
-      id: 2,
-      name: "Caderno de espiral 10 matérias",
-      price: 20.98
-    }
-  ]
+  products: ProductModel[]
   displayedColumns = ['id', 'name', 'price', 'actions']
-  dataSource = this.products
 
-  constructor(private headerService: HeaderService) {
+  constructor(
+    private productService: ProductService,
+    private headerService: HeaderService) {
     headerService.headerData = {
       title: "Cadastro de Produtos",
       icon: "store",
@@ -34,6 +25,9 @@ export class ProductReadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.productService.readProducts().subscribe(
+      products => this.products = products
+    )
   }
 
 }

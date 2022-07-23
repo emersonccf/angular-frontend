@@ -32,11 +32,12 @@ export class ProductCreateComponent implements OnInit {
 
   createProduct(): void {
     this.productService.createProduct(this.product).subscribe(
-      (product) => this.productService.showMessage(
-        `Produto "${product.name} Id => ${product.id}" criado com sucesso!`, ['success', 'font-white']
-      )
-    )
-    this.router.navigate(['/products'])
+      product => {
+        // só exibe a mensagem e redirecionar quando recebe a resposta positiva do backend
+        this.productService.showMessage(
+          `Produto "${product.name} Id => ${product.id}" criado com sucesso!`, ['success', 'font-white'])
+        this.router.navigate(['/products'])
+      })
   }
 
 }

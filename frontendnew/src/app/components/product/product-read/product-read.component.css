@@ -53,6 +53,10 @@ https://levitrares.com/host-https-qastack.com.br/programming/45159066/md-table-h
     color: #fff;
 }
 
+.mat-header-row {
+    min-height: 1.6rem;
+}
+
 ::ng-deep .mat-tooltip {
     font-size: 0.7rem;
     background-color: rgba(63, 81, 181, 0.733);
