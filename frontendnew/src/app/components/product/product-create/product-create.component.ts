@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HeaderService } from '../../template/header/header.service';
-import { ProductService } from '../product.service';
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { HeaderService } from '../../template/header/header.service'
+import { ProductModel } from '../product.model'
+import { ProductService } from '../product.service'
 
 @Component({
   selector: 'app-product-create',
@@ -9,6 +10,11 @@ import { ProductService } from '../product.service';
   styleUrls: ['./product-create.component.css']
 })
 export class ProductCreateComponent implements OnInit {
+
+  product: ProductModel = {
+    name: '',
+    price: null
+  }
 
   constructor(
     private headerService: HeaderService,
@@ -25,8 +31,11 @@ export class ProductCreateComponent implements OnInit {
   }
 
   createProduct(): void {
-    this.productService.showMessage('Produto criado com sucesso!',
-      ['success', 'font-white'])
+    this.productService.createProduct(this.product).subscribe(
+      (product) => this.productService.showMessage(
+        `Produto "${product.name} Id => ${product.id}" criado com sucesso!`, ['success', 'font-white']
+      )
+    )
     this.router.navigate(['/products'])
   }
 

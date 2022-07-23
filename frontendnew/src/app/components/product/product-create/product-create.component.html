@@ -3,12 +3,14 @@
 
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Nome do Produto: </mat-label>
-            <input type="text" matInput placeholder="Informe a descrição do produto">
+            <input type="text" matInput placeholder="Informe a descrição do produto" [(ngModel)]="product.name"
+                name="name">
         </mat-form-field>
 
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Preço: </mat-label>
-            <input type="number" matInput placeholder="Informe o peço do produto">
+            <input type="number" matInput placeholder="Informe o peço do produto" [(ngModel)]="product.price"
+                name="prince">
         </mat-form-field>
 
     </form>
