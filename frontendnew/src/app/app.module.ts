@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatTableModule } from '@angular/material/table'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatDialogModule } from '@angular/material/dialog'
 
 import { RedDirective } from './directives/red.directive'
 
@@ -28,7 +29,8 @@ import { ProductCreateComponent } from './components/product/product-create/prod
 import { HomeComponent } from './views/home/home.component'
 import { ProductCrudComponent } from './views/product-crud/product-crud.component'
 import { ProductReadComponent } from './components/product/product-read/product-read.component';
-import { ProductUpdateComponent } from './components/product/product-update/product-update.component'
+import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
+import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +42,8 @@ import { ProductUpdateComponent } from './components/product/product-update/prod
     RedDirective,
     ProductCreateComponent,
     ProductReadComponent,
-    ProductUpdateComponent
+    ProductUpdateComponent,
+    ProductDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import { ProductUpdateComponent } from './components/product/product-update/prod
     MatSnackBarModule,
     MatTooltipModule,
     HttpClientModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

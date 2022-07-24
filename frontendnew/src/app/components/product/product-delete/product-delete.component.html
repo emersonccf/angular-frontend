@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>
+    <span>
+        <mat-icon color="warn">delete_sweep</mat-icon> <span>Excluir Produto</span>
+    </span>
+</h1>
+<div mat-dialog-content>
+    Deseja realmente excluir o produto:
+    <ul>
+        <li>ID -> <strong>{{product.id}}</strong> </li>
+        <li>Descrição -> {{product.name}} </li>
+        <li>Preço -> R$ {{product.price}}</li>
+    </ul>
+    <div mat-dialog-actions>
+        <button mat-button color="warn" (click)="deleteProduct()">Sim</button>
+        <button mat-button mat-dialog-close cdkFocusInitial>Não</button>
+    </div>
+</div>

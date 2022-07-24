@@ -26,12 +26,11 @@
                     <mat-cell *matCellDef="let product">
                         <button mat-icon-button matTooltip="Editar id:{{product.id}}"
                             routerLink="/products/update/{{product.id}}">
-                            <!--TODO: routerLink=""  -->
                             <mat-icon color="primary">edit_note</mat-icon>
                         </button>
                         <samp class="margin-right"></samp>
-                        <button mat-icon-button matTooltip="Excluir">
-                            <!-- TODO: routerLink=""  -->
+                        <button mat-icon-button matTooltip="Excluir id:{{product.id}}"
+                            (click)="openDialogDeleteProduct(product.id)">
                             <mat-icon color="warn">delete</mat-icon>
                         </button>
                     </mat-cell>
