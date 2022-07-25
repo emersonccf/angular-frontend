@@ -35,7 +35,8 @@ https://levitrares.com/host-https-qastack.com.br/programming/45159066/md-table-h
 
 .mat-column-price {
     flex: 1 0 20%;
-    justify-content: center;
+    justify-content: right;
+    padding-right: 0.8rem;
 }
 
 .mat-column-actions {

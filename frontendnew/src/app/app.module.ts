@@ -1,4 +1,7 @@
-import { NgModule } from '@angular/core'
+import { NgModule, LOCALE_ID } from '@angular/core'
+import localePt from '@angular/common/locales/pt'
+import { registerLocaleData } from '@angular/common'
+
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser'
@@ -28,9 +31,11 @@ import { ProductCreateComponent } from './components/product/product-create/prod
 
 import { HomeComponent } from './views/home/home.component'
 import { ProductCrudComponent } from './views/product-crud/product-crud.component'
-import { ProductReadComponent } from './components/product/product-read/product-read.component';
-import { ProductUpdateComponent } from './components/product/product-update/product-update.component';
+import { ProductReadComponent } from './components/product/product-read/product-read.component'
+import { ProductUpdateComponent } from './components/product/product-update/product-update.component'
 import { ProductDeleteComponent } from './components/product/product-delete/product-delete.component'
+
+registerLocaleData(localePt)
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +69,10 @@ import { ProductDeleteComponent } from './components/product/product-delete/prod
     HttpClientModule,
     MatDialogModule,
   ],
-  providers: [],
+  providers: [{
+    provide: LOCALE_ID,
+    useValue: 'pt-BR'
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

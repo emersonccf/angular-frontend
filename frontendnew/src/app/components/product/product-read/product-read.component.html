@@ -18,7 +18,7 @@
                 <!-- price Column -->
                 <ng-container matColumnDef="price">
                     <mat-header-cell *matHeaderCellDef> Preço </mat-header-cell>
-                    <mat-cell *matCellDef="let product"> {{product.price}} </mat-cell>
+                    <mat-cell *matCellDef="let product"> {{product.price | currency: "BRL"}} </mat-cell>
                 </ng-container>
                 <!-- actions Column -->
                 <ng-container matColumnDef="actions">
